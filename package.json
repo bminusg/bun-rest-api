@@ -1,14 +1,21 @@
 {
+  "version": "0.0.1",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.ts",
+    "test": "bun test",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@vercel/postgres": "^0.8.0",
     "drizzle-orm": "^0.30.10",
-    "hono": "^4.3.4"
+    "hono": "^4.3.4",
+    "lucia": "^3.2.0"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "drizzle-kit": "^0.21.0"
+    "drizzle-kit": "^0.21.1"
   }
 }

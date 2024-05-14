@@ -1,9 +1,9 @@
-import { Hono } from 'hono'
+import { Hono } from "hono";
+import userRoutes from "api/v1/users/users.routes";
 
-const app = new Hono()
+const app = new Hono();
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+// ROUTES
+app.route("/v1/users", userRoutes);
 
-export default app
+export default app;

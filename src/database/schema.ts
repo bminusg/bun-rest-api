@@ -1,6 +1,14 @@
-import { uuid, text, pgTable } from "drizzle-orm/pg-core";
+import { pgTable, uuid, timestamp, text, varchar } from "drizzle-orm/pg-core";
+import users from "api/v1/users/users.schema";
 
-export const users = pgTable("users", {
-  id: uuid("uuid4").defaultRandom().primaryKey(),
-  mail: text("email").notNull(),
+const sessions = pgTable("session", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  user: varchar("user", { length: 36 })
+    .notNull()
+    .references(() => users.id),
+  expiresAt: timestamp("expiresAt", {
+    withTimezone: true,
+  }).notNull(),
 });
+
+export { users, sessions };
