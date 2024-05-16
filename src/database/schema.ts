@@ -3,7 +3,7 @@ import users from "api/v1/users/users.schema";
 
 const sessions = pgTable("session", {
   id: uuid("id").defaultRandom().primaryKey(),
-  user: varchar("user", { length: 36 })
+  user: uuid("user")
     .notNull()
     .references(() => users.id),
   expiresAt: timestamp("expiresAt", {
