@@ -6,7 +6,7 @@ if (!postgresURL) throw new Error("DB Postgres URL is not defined");
 export default defineConfig({
   dialect: "postgresql",
   schema: "./src/database/schema.ts",
-  out: "./drizzle",
+  out: "./src/database/migrations",
   dbCredentials: {
     url: postgresURL,
   },

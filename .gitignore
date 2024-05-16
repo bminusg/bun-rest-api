@@ -116,6 +116,9 @@ dist
 # DynamoDB Local files
 .dynamodb/
 
+# DB Local Migration files
+src/database/migrations
+
 # TernJS port file
 .tern-port
 
