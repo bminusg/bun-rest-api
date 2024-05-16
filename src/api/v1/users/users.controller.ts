@@ -1,9 +1,17 @@
 import { Context } from "hono";
-import { isUserBodyValid } from "./user.valdiator";
-import { createUser } from "./user.services";
+import { createUser, getUsers } from "./user.services";
 
-export const getAllUsers = (c: Context) => {
-  return c.json("get all users", 200);
+export const getAllUsers = async (c: Context) => {
+  try {
+    const { data, error } = await getUsers();
+    return c.json({ data, error }, 200);
+  } catch (error: any) {
+    console.error(error);
+    return c.json(
+      { data: null, error: { message: error?.message ?? error, status: 500 } },
+      500
+    );
+  }
 };
 
 export const getOneUser = (c: Context) => {
