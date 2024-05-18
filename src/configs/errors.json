@@ -1,0 +1,14 @@
+[
+  {
+    "message": "Please provide a valid mail adress syntax",
+    "code": "emailInvalid",
+    "i18n": "validation.emailInvalid",
+    "status": 400
+  },
+  {
+    "message": "",
+    "code": "emailRequired",
+    "i18n": "validation.emailRequired",
+    "status": 400
+  }
+]

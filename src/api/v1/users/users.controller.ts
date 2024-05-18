@@ -1,5 +1,6 @@
 import { Context } from "hono";
 import { createUser, getUsers } from "./user.services";
+import errorHandler from "utils/errorHandler";
 
 export const getAllUsers = async (c: Context) => {
   try {
@@ -26,10 +27,8 @@ export const postUser = async (c: Context) => {
 
     return c.json({ data, error }, 201);
   } catch (error: any) {
-    console.error(error);
-    return c.json(
-      { data: null, error: { message: error?.message ?? error, status: 500 } },
-      500
-    );
+    const errorMessage = errorHandler(error);
+
+    return c.json({ data: null, error: errorMessage }, errorMessage.status);
   }
 };
