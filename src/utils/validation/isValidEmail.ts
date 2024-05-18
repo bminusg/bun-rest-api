@@ -5,3 +5,5 @@ const emailRegex = new RegExp(
 const isValidEmail = (email: string): boolean => {
   return emailRegex.test(email);
 };
+
+export default isValidEmail;

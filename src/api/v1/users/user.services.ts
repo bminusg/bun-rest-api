@@ -8,18 +8,9 @@ export const getUsers = async () => {
   return { data, error: null };
 };
 
-export const createUser = async (body) => {
+export const createUser = async (body: any) => {
   const isValid = isUserBodyValid(body);
 
-  if (isValid) {
-    const user = await db.insert(users).values(body).returning();
-    console.log("USER", user);
-
-    return { data: user, error: null };
-  } else {
-    return {
-      data: null,
-      error: { message: "Invalid", code: "code", status: 400 },
-    };
-  }
+  const user = await db.insert(users).values(body).returning();
+  return { data: user, error: null };
 };
