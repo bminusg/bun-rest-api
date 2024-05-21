@@ -1,9 +1,9 @@
-import { pgTable, uuid, timestamp, text, varchar } from "drizzle-orm/pg-core";
+import { pgTable, uuid, timestamp } from "drizzle-orm/pg-core";
 import users from "api/v1/users/users.schema";
 
-const sessions = pgTable("session", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  user: uuid("user")
+const sessions = pgTable("sessions", {
+  id: uuid("id").primaryKey(),
+  userId: uuid("userId")
     .notNull()
     .references(() => users.id),
   expiresAt: timestamp("expiresAt", {
