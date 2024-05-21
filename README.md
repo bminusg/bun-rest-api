@@ -3,17 +3,21 @@
 - [ ] Frontend Hosting? JamStack?
 - [ ] Logger
 - [ ] Staging, DEV, Production ENVs
-- [ ] Error Handling
+- [ x ] Error Handling
 - [ ] DB Schema
 - [ ] Authentication
   - [ ] User
   - [ ] Policies
   - [ ] External APIs
 - [ ] Security
-  - [ ] Headers?
-  - [ ] Lucia
+  - [ ] Secure Headers?
+  - [ ] Lucia || [Auth.js | https://github.com/honojs/middleware/tree/main/packages/auth-js]
+  - [ ] User Registrierung "Email vergeben" === Angrifsvektor? --> [Rate Limiter | https://github.com/rhinobase/hono-rate-limiter]
+  - [ ] CSRF Protection - https://hono.dev/middleware/builtin/csrf
+  - [ ] CORS - https://hono.dev/middleware/builtin/cors
 - [ ] External APIs
   - [ ] DV360 Connection
+  - [ ] [Meta Business | https://developers.facebook.com/docs/business-manager-api/]
   - [ ] XANDR
 - [ x ] Zeiteinschätzungen
 - [ ] API Documentation
@@ -41,6 +45,12 @@ Table users {
   firstName varchar
   lastName varchar
   createdAt timestamp
+}
+
+Table sessions {
+  id uuid [primary key]
+  user uuid [ref: - users.id]
+  expiresAt timestampz [not null]
 }
 
 Table adservers {
@@ -131,6 +141,9 @@ Table creatives {
   flight integer
   format uuid [ref: - formats.id]
   campaign uuid [ref: - campaigns.id]
+  isComposite boolean
+  isCompositeCore boolean
+  createdAt timestampz
 }
 
 Table formats {
@@ -139,6 +152,7 @@ Table formats {
   slug varchar [unique]
   width integer
   height integer
+  unitSize units
   type formatType
 }
 
@@ -183,5 +197,6 @@ Table metrics {
   slug varchar
   isKPI boolean
 }
+
 
 ```
