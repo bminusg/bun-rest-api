@@ -1,13 +1,9 @@
-import { ErrorMessageResponse } from "types/responses";
-import errorCodesJSON from "configs/errors.json";
-
-const errorCodes: ErrorMessageResponse[] =
-  errorCodesJSON as ErrorMessageResponse[];
+import { errorConfigs, ErrorMessageResponse } from "configs/errors.config";
 
 const errorHandler = (error: any): ErrorMessageResponse => {
-  const errorCode = error.message;
+  const errorCode = error.message ?? error;
 
-  const errorResponse = errorCodes.find(
+  const errorResponse = errorConfigs.find(
     (errorCodeItem: ErrorMessageResponse) => errorCodeItem.code === errorCode
   ) ?? { message: error, status: 500, i18n: "", code: errorCode };
 
