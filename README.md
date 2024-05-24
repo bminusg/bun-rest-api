@@ -34,37 +34,55 @@ Table agencies {
   slug string [unique]
   description text
   employees uuid [ref: < users.id]
-  avatar uuid [ref: - avatars.id]
+  avatar uuid [ref: - assets.id]
   adservers uuid [ref: < adservers.id]
 }
 
 Table users {
   id uuid [primary key]
   agency uuid [ref: - agencies.id]
-  avatar uuid [ref: - avatars.id]
+  avatar uuid [ref: - assets.id]
+  role uuid [ref: - roles.id]
   firstName varchar
   lastName varchar
   createdAt timestamp
-}
-
-Table sessions {
-  id uuid [primary key]
-  user uuid [ref: - users.id]
-  expiresAt timestampz [not null]
 }
 
 Table adservers {
   id uuid [primary key]
   name varchar
   slug varchar [unique]
-  avatar uuid [ref: - avatars.id]
+  avatar uuid [ref: - assets.id]
+  color varchar
+  label varchar
+  authType AuthTypes
 }
 
-Table avatars {
+enum AuthTypes {
+  "API Keys"
+  "Basic Authentication"
+  "OAuth 2.0"
+  "Bearer Tokens"
+  "JWT"
+  "HMAC"
+  "Custom Token-Based Authentication"
+}
+
+Table assets {
   id uuid [primary key]
   portrait text
   landscape text
   icon text
+  downloadUrl text
+  type AssetType
+  weight float
+}
+
+enum AssetType {
+  "logo"
+  "zip"
+  "image"
+  "video"
 }
 
 Table advertisers {
@@ -72,8 +90,47 @@ Table advertisers {
   name varchar
   slug varchar [unique]
   description text
-  logo uuid [ref: - avatars.id]
+  logo uuid [ref: - assets.id]
   adserver uuid [ref: - adservers.id]
+}
+
+// AUTH
+
+Table sessions {
+  id uuid [primary key]
+  user uuid [ref: - users.id]
+  expiresAt timestampz [not null]
+}
+
+Table adServerTokens {
+  id uuid [primary key]
+  agency uuid [ref: - agencies.id]
+  adserver uuid [ref: - adservers.id]
+  token text
+  refreshToken text
+  expiredAt timestampz
+}
+
+Table roles {
+  id uuid [primary key]
+  name varchar
+  slug varchar
+  campaignCanRead boolean
+  campaignCanDelete boolean
+  campaignCanCreate boolean
+  campaignCanUpdate boolean
+  reportingCanRead boolean
+  reportingCanDelete boolean
+  reportingCanCreate boolean
+  reportingCanUpdate boolean
+  agencyCanRead boolean
+  agencyCanDelete boolean
+  agencyCanCreate boolean
+  agencyCanUpdate boolean
+  assetsCanRead boolean
+  assetsCanDelete boolean
+  assetsCanCreate boolean
+  assetsCanUpdate boolean
 }
 
 // CAMPAIGNS
